@@ -9,7 +9,6 @@ const nextConfig = {
     unoptimized: true,
     path: "",
   },
-  assetPrefix: "./",
 };
 
 module.exports = nextConfig;
