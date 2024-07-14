@@ -7,7 +7,9 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-  }
+    path: "",
+  },
+  assetPrefix: "./",
 };
 
 module.exports = nextConfig;
