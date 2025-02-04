@@ -2,7 +2,7 @@
 title: "Exploring Adversarial Attacks on Convolutional Neural Networks - Part 1"
 description: "Digging into simple CNN adversarial attacks shown in DiceCTF 2024 & osu!gaming CTF 2024"
 date: "2024-07-13"
-tags: ['ai', 'vision', 'ctf', 'misc']
+tags: ['ai', 'vision', 'ctf', 'misc', 'writeup']
 ---
 
 <div className="lead">
@@ -295,7 +295,7 @@ We needed to do more interations than previous example. but we seem to still be 
 
 ### Applying solution to an actual image
 
-Using the burb example shown earlier in the article, let's try to create an adversarial example that would classified as a `assault rifle` (index $$413$$).
+Using the burb example shown earlier in the article, let's try to create an adversarial example that would classified as a "assault rifle" (index $$413$$).
 We will also use a lower $$\epsilon$$, the perturbations should be within $$1$$ pixel of the original image.
 
 ```python
@@ -343,7 +343,7 @@ Iter: 8  | Loss:  0.0470 | min/max/mean: 0.00/2.00/0.66 | Pred: "assault rifle" 
 Iter: 9  | Loss:  0.0376 | min/max/mean: 0.00/2.00/0.66 | Pred: "assault rifle" (91.72% confidence)
 ```
 
-Even with a very low $$\epsilon$$, we are still able to generate a high confidence image that is able to classified into `assault rifle`.
+Even with a very low $$\epsilon$$, we are still able to generate a high confidence image that is able to classified into "assault rifle".
 Let's see what the new image looks like.
 
 <div className="flex items-center justify-center flex-col">
@@ -722,7 +722,7 @@ But tbh, I really want to pp farm hitorigoto and my map filter won't let me. Can
 
 <br/>
 
-This challenge comes with 3 different files, `hitorigoto.png`, `model.pt`, and `server.py`. Let's explore the code first to figure out how to get the flag.
+This challenge comes with 3 different files, "hitorigoto.png", "model.pt", and "server.py". Let's explore the code first to figure out how to get the flag.
 
 ```python
 model = resnet18()
@@ -765,7 +765,7 @@ with open("flag.txt") as f:
 
 The whole point of this challenge seems to be able to create a confident (>82.5% confidence) adversarial example from the given image that is able to be resistant against the resizing.
 We already know how to do this, but this challenge posed a problem for me initially. I was getting very inconsistent results.
-I found out the challenge author left `.eval()` in the code.
+I found out the challenge author left ".eval()" in the code.
 This left the current model in training mode. For us, this just means that it will be harder to generate adversarial example because the batch normalization layers won't be applied to our input.
 
 Let's try the same two methods in the previous challenge on this one.
