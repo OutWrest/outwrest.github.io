@@ -188,3 +188,7 @@ img:has(+.subtext),
 p:has(+.subtext) {
   margin-bottom: 0;
 }
+
+.math-container {
+  font-size: 1.5em !important;
+}

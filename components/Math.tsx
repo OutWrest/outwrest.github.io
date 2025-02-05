@@ -7,18 +7,9 @@ interface MathProps {
 }
 
 export const Math: React.FC<MathProps> = ({ children }) => {
-  // return (
-  //   <div className={cx(
-  //     "flex items-center justify-center rounded-md p-4 border w-11/12 not-prose border-0",
-  //     "bg-gray-100",
-  //     "dark:bg-gray-800"
-  //   )}>
-  //     {children}
-  //   </div>
-  // );
   return (
     <div className={cx(
-      "flex items-center justify-center"
+      "flex items-center justify-center math-container"
     )}>
       <div className={cx(
         "flex items-center justify-center rounded-md p-4 border w-11/12 not-prose border-0",
