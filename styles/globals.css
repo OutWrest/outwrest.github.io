@@ -192,3 +192,16 @@ p:has(+.subtext) {
 .math-container {
   font-size: 1.5em !important;
 }
+
+.video-wrapper {
+  aspect-ratio: 16 / 9;
+  height: 220px;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+@media (min-width: 640px)   { .video-wrapper { height: 300px; } } /* sm */
+@media (min-width: 768px)   { .video-wrapper { height: 420px; } } /* md */
+@media (min-width: 1024px)  { .video-wrapper { height: 540px; } } /* lg */
