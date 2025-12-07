@@ -2,9 +2,9 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Link from "next/link";
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import rehypePrism from "rehype-prism-plus";
-import { getAllMdx, getMdx } from "@/lib/mdx";
+import { getAllMdx } from "@/lib/mdx";
 import { MDXFrontMatter } from "@/lib/types";
 import { Page } from "@/components/Page";
 import { components } from "@/components/MDX";
@@ -20,7 +20,7 @@ interface ContextProps extends ParsedUrlQuery {
 
 interface PostProps {
   frontMatter: MDXFrontMatter;
-  mdx: any;
+  mdx: MDXRemoteSerializeResult;
   previous: MDXFrontMatter | null;
   next: MDXFrontMatter | null;
 }

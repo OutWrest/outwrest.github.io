@@ -3,6 +3,7 @@ import Image from "next/image";
 import siteConfig from "@/data/siteConfig";
 import Link from "next/link";
 import { cx } from "@/lib/utils";
+import { ThemeSelect } from "@/components/ThemeSelect";
 
 export const Header: React.FC = () => {
   const { pathname } = useRouter();
@@ -25,8 +26,8 @@ export const Header: React.FC = () => {
         )}
       </Link>
 
-      <nav>
-        <ul className="flex space-x-8">
+      <nav className="flex items-center gap-6">
+        <ul className="flex space-x-6">
           {siteConfig.nav.map((item, index) => {
             const isActive = item.href === pathname;
             return (
@@ -35,8 +36,10 @@ export const Header: React.FC = () => {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cx(
-                    "text-gray-500 hover:text-gray-900",
-                    "dark:text-gray-400 dark:hover:text-gray-300"
+                    "text-sm font-medium transition-colors hover:text-pink-600",
+                    isActive
+                      ? "text-pink-600 dark:text-pink-400"
+                      : "text-gray-600 dark:text-gray-400 dark:hover:text-pink-400"
                   )}
                 >
                   {item.label}
@@ -45,6 +48,9 @@ export const Header: React.FC = () => {
             );
           })}
         </ul>
+        <div className="pl-6 border-l border-gray-200 dark:border-gray-800">
+          <ThemeSelect />
+        </div>
       </nav>
     </header>
   );

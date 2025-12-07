@@ -1,73 +1,41 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Command, Sun, Moon, Code } from "react-feather";
+import { Sun, Moon } from "react-feather";
 import { cx } from "@/lib/utils";
-
-const THEME_MAP: { [key: string]: { label: string; icon: React.ReactNode } } = {
-  system: {
-    label: "System",
-    icon: <Command width=".9em" />,
-  },
-  light: {
-    label: "Light",
-    icon: <Sun width=".9em" />,
-  },
-  dark: {
-    label: "Dark",
-    icon: <Moon width=".9em" />,
-  },
-};
 
 export const ThemeSelect = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme: activeTheme, themes, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <div className="w-8 h-8" /> // Placeholder to prevent layout shift
+    );
+  }
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setTheme(e.target.value);
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
 
   return (
-    <div className="relative inline-block">
-      <label htmlFor="theme-menu" className="sr-only">
-        Toggle theme
-      </label>
-      <span
-        aria-hidden={true}
-        className={cx(
-          "absolute top-1/2 -translate-y-1/2 left-2 pointer-events-none",
-          "opacity-50"
-        )}
-      >
-        {THEME_MAP[activeTheme!].icon}
-      </span>
-      <span
-        aria-hidden={true}
-        className="absolute top-1/2 -translate-y-1/2 right-2 pointer-events-none"
-      >
-        <Code width=".9em" className="rotate-90 opacity-50" />
-      </span>
-      <select
-        id="theme-menu"
-        className={cx(
-          "appearance-none rounded-md sm:w-full pl-8 pr-12 border",
-          "bg-gray-100 border-gray-200",
-          "dark:bg-gray-800 dark:border-gray-700"
-        )}
-        onChange={handleChange}
-        value={activeTheme}
-      >
-        {themes.map((theme) => {
-          return (
-            <option key={theme} value={theme}>
-              {THEME_MAP[theme].label}
-            </option>
-          );
-        })}
-      </select>
-    </div>
+    <button
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+      className={cx(
+        "p-2 rounded-md transition-all duration-200 ease-in-out",
+        "hover:bg-gray-200 dark:hover:bg-gray-800",
+        "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-50",
+        "focus:outline-none focus:ring-2 focus:ring-pink-500"
+      )}
+    >
+      {resolvedTheme === "dark" ? (
+        <Sun className="w-5 h-5" />
+      ) : (
+        <Moon className="w-5 h-5" />
+      )}
+    </button>
   );
 };
