@@ -23,7 +23,11 @@ export const getMdx = (fileName: string) => {
 };
 
 export const getAllMdx = () => {
-  const items = fs.readdirSync(postsPath).map((item) => getMdx(item));
+  const mdxFiles = fs
+    .readdirSync(postsPath)
+    .filter((item) => item.toLowerCase().endsWith(".mdx"));
+
+  const items = mdxFiles.map((item) => getMdx(item));
   return items.sort(
     (a, b) =>
       new Date(b.frontMatter.date).getTime() -
