@@ -1,4 +1,4 @@
-import { GitHub } from "react-feather";
+import { GitHub, Twitter } from "react-feather";
 import siteConfig from "@/data/siteConfig";
 import { cx } from "@/lib/utils";
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -6,6 +6,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 const iconProps = { className: "w-4 h-4" };
 
 const SOCIAL_ICONS: { [key: string]: React.ReactNode } = {
+  twitter: <Twitter {...iconProps} />,
   github: <GitHub {...iconProps} />,
 };
 

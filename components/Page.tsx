@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { onlyText } from "react-children-utilities";
 import { formatDate } from "@/lib/formatDate";
 import siteConfig from "@/data/siteConfig";
@@ -20,23 +21,63 @@ export const Page: React.FC<PageProps> = ({
   thumbnail,
   children,
 }) => {
+  const router = useRouter();
   const metaTitle = onlyText(title);
   const metaDescription = description
     ? onlyText(description)
     : siteConfig.siteDescription;
   const metaThumbnail = thumbnail ? thumbnail : siteConfig.siteThumbnail;
   const customTitle = `${metaTitle} - ${siteConfig.siteName}`;
+  const currentPath = router.asPath.split("?")[0];
+  const currentUrl = `${siteConfig.siteUrl}${currentPath === "/" ? "" : currentPath
+    }`;
+  const imageUrl = `${siteConfig.siteUrl}${metaThumbnail}`;
+
+  const jsonLd = date
+    ? {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: metaTitle,
+      description: metaDescription,
+      image: [imageUrl],
+      datePublished: date,
+      author: {
+        "@type": "Person",
+        name: siteConfig.siteName,
+      },
+      url: currentUrl,
+    }
+    : {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: metaTitle,
+      description: metaDescription,
+      url: currentUrl,
+    };
+
   return (
     <>
       <Head>
         <title>{customTitle}</title>
-        <meta name="og:url" content={siteConfig.siteUrl} />
+        <link rel="canonical" href={currentUrl} />
+
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:site_name" content={siteConfig.siteName} />
         <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:type" content={date ? "article" : "website"} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={imageUrl} />
+
         <meta name="description" content={metaDescription} />
-        <meta name="og:description" content={metaDescription} />
-        <meta
-          property="og:image"
-          content={`${siteConfig.siteUrl}${metaThumbnail}`}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
       <header
